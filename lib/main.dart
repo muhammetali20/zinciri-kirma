@@ -4,6 +4,7 @@ import 'package:provider/provider.dart'; // Or fflutter_riverpod if chosen
 // import 'package:path_provider/path_provider.dart' as path_provider; // No longer needed for basic init
 import 'package:intl/date_symbol_data_local.dart'; // Import for date formatting initialization
 import 'package:google_mobile_ads/google_mobile_ads.dart'; // AdMob için import
+import 'package:flutter/foundation.dart'; // kDebugMode için
 
 // Import screens
 import 'screens/habit_list_screen.dart'; // Placeholder, will create
@@ -20,6 +21,15 @@ import 'models/habit.dart'; // Import the Habit model and generated adapter
 
 // Define the box name as a constant
 const String habitBoxName = 'habits';
+
+// Test cihazlar için sabit tanımları
+class TestDeviceAds {
+  // Test cihaz kimlikleri
+  static const List<String> testDeviceIds = [
+    'kdev', // Bu özel bir anahtar - test cihazında bunu kullanınca gerçek cihaz ID'si konsola yazılır
+    // 'Emulator cihazınızın ID'si'
+  ];
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,8 +48,15 @@ Future<void> main() async {
   // Initialize date formatting for Turkish locale
   await initializeDateFormatting('tr_TR', null);
 
-  // Initialize AdMob SDK
-  MobileAds.instance.initialize(); // SDK'yı başlat
+  // AdMob SDK'yı başlat ve test cihazlarını ekle
+  MobileAds.instance.initialize();
+  
+  // Test cihazları ekle - geliştirme sırasında gerçek reklamlar yerine test reklamlarını göster
+  MobileAds.instance.updateRequestConfiguration(
+    RequestConfiguration(
+      testDeviceIds: kDebugMode ? TestDeviceAds.testDeviceIds : null,
+    ),
+  );
 
   // TODO: Initialize AdMob SDK
   // MobileAds.instance.initialize();

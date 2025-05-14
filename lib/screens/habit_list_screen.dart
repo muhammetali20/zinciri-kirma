@@ -25,9 +25,9 @@ class _HabitListScreenState extends State<HabitListScreen> {
   BannerAd? _bannerAd;
   bool _isBannerAdLoaded = false;
 
-  // Test Ad Unit IDs
-  final String _androidBannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
-  final String _iosBannerAdUnitId = 'ca-app-pub-3940256099942544/2934735716';
+  // Android banner reklamı için gerçek kimlik
+  final String _androidBannerAdUnitId = 'ca-app-pub-6066087562934404/6054041918';
+  final String _iosBannerAdUnitId = 'ca-app-pub-3940256099942544/2934735716'; // iOS için test kimliği
 
   @override
   void initState() {
@@ -44,7 +44,10 @@ class _HabitListScreenState extends State<HabitListScreen> {
     String adUnitId = Platform.isAndroid ? _androidBannerAdUnitId : _iosBannerAdUnitId;
     _bannerAd = BannerAd(
       adUnitId: adUnitId,
-      request: const AdRequest(),
+      request: const AdRequest(
+        keywords: ['health', 'fitness', 'productivity'], // Anahtar kelimeler ekle
+        nonPersonalizedAds: true, // Kişiselleştirilmiş olmayan reklamlar göster
+      ),
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {

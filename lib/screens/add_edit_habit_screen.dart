@@ -26,12 +26,12 @@ class _AddEditHabitScreenState extends State<AddEditHabitScreen> {
   BannerAd? _bannerAd; // Banner Ad variable
   bool _isBannerAdLoaded = false; // Banner Ad loaded status
 
-  // Test Ad Unit IDs
-  final String _androidInterstitialAdUnitId = 'ca-app-pub-3940256099942544/1033173712';
-  final String _iosInterstitialAdUnitId = 'ca-app-pub-3940256099942544/4411468910';
-  // Add Banner Test IDs
-  final String _androidBannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
-  final String _iosBannerAdUnitId = 'ca-app-pub-3940256099942544/2934735716';
+  // Android için gerçek reklam kimlikleri
+  final String _androidInterstitialAdUnitId = 'ca-app-pub-6066087562934404/5086484726'; // Android geçiş reklamı
+  final String _iosInterstitialAdUnitId = 'ca-app-pub-3940256099942544/4411468910'; // iOS için test kimliği
+  // Banner reklam kimlikleri
+  final String _androidBannerAdUnitId = 'ca-app-pub-6066087562934404/6054041918'; // Android banner reklamı
+  final String _iosBannerAdUnitId = 'ca-app-pub-3940256099942544/2934735716'; // iOS için test kimliği
 
   @override
   void initState() {
@@ -69,7 +69,10 @@ class _AddEditHabitScreenState extends State<AddEditHabitScreen> {
     String adUnitId = Platform.isAndroid ? _androidBannerAdUnitId : _iosBannerAdUnitId;
     _bannerAd = BannerAd(
       adUnitId: adUnitId,
-      request: const AdRequest(),
+      request: const AdRequest(
+        keywords: ['health', 'fitness', 'productivity'],
+        nonPersonalizedAds: true,
+      ),
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
@@ -95,7 +98,10 @@ class _AddEditHabitScreenState extends State<AddEditHabitScreen> {
     String adUnitId = Platform.isAndroid ? _androidInterstitialAdUnitId : _iosInterstitialAdUnitId;
     InterstitialAd.load(
       adUnitId: adUnitId,
-      request: const AdRequest(),
+      request: const AdRequest(
+        keywords: ['health', 'fitness', 'productivity'],
+        nonPersonalizedAds: true,
+      ),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           print('$ad loaded');
